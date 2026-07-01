@@ -1,0 +1,25 @@
+@import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap");
+
+:root{
+    --primary:#ffe4e1;
+}
+
+html{
+    background:#0a0505;
+    color:#f8fafc;
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"Outfit",sans-serif;
+}
+
+a{
+    transition:.2s;
+}
+
+::selection{
+    background:#ffe4e1;
+    color:black;
+}

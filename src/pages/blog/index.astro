@@ -1,59 +1,55 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import { getCollection } from "astro:content";
 
-const posts = await getCollection("blog");
+const posts=await getCollection("blog");
 
 posts.sort(
-  (a, b) =>
-    new Date(b.data.pubDate).getTime() -
-    new Date(a.data.pubDate).getTime()
+(a,b)=>
+new Date(b.data.pubDate)-new Date(a.data.pubDate)
 );
 ---
 
-<html>
+<Layout title="Blog">
 
-<head>
+<section class="max-w-5xl mx-auto px-6 py-20">
 
-<title>Blog</title>
+<h1 class="text-6xl font-bold">
+Blog
+</h1>
 
-</head>
-
-<body>
-
-<h1>Blog</h1>
-
-{
-posts.map(post => (
-
-<article style="margin-bottom:40px;">
-
-<h2>
-
-<a href={`/blog/${post.slug}/`}>
-
-{post.data.title}
-
-</a>
-
-</h2>
-
-<p>
-
-{post.data.description}
-
+<p class="mt-5 text-slate-400">
+Thoughts on AI, automation and software.
 </p>
 
-<small>
+<div class="space-y-8 mt-16">
 
+{
+posts.map(post=>(
+
+<a
+href={`/blog/${post.id}/`}
+class="block rounded-3xl border border-white/10 p-8 hover:border-[#ffe4e1] transition-all hover:-translate-y-1">
+
+<h2 class="text-3xl font-bold">
+{post.data.title}
+</h2>
+
+<p class="mt-4 text-slate-400">
+{post.data.description}
+</p>
+
+<p class="mt-6 text-sm text-slate-500">
 {post.data.pubDate.toDateString()}
+</p>
 
-</small>
-
-</article>
+</a>
 
 ))
 }
 
-</body>
+</div>
 
-</html>
+</section>
+
+</Layout>

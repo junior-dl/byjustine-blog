@@ -1,37 +1,51 @@
 ---
+import Layout from "../../layouts/Layout.astro";
 import { getCollection, render } from "astro:content";
 
 export async function getStaticPaths() {
-  const posts = await getCollection("blog");
 
-  return posts.map((post) => ({
-    params: {
-      id: post.id.replace(/\.md$/, ""),
-    },
-    props: {
-      post,
-    },
-  }));
+const posts=await getCollection("blog");
+
+return posts.map(post=>({
+params:{id:post.id.replace(/\.md$/,"")},
+props:{post}
+}));
+
 }
 
-const { post } = Astro.props;
-const { Content } = await render(post);
+const {post}=Astro.props;
+
+const {Content}=await render(post);
 ---
 
-<html lang="en">
-  <head>
-    <title>{post.data.title}</title>
-  </head>
+<Layout title={post.data.title}>
 
-  <body>
-    <a href="/blog">← Back to Blog</a>
+<article class="max-w-3xl mx-auto px-6 py-20">
 
-    <h1>{post.data.title}</h1>
+<a
+href="/blog"
+class="text-[#ffe4e1]">
 
-    <small>{post.data.pubDate.toDateString()}</small>
+← Back
 
-    <hr />
+</a>
 
-    <Content />
-  </body>
-</html>
+<h1 class="text-6xl font-black mt-8 leading-tight">
+{post.data.title}
+</h1>
+
+<p class="mt-6 text-slate-500">
+{post.data.pubDate.toDateString()}
+</p>
+
+<div class="h-px bg-white/10 my-12"></div>
+
+<div class="space-y-6 leading-9 text-lg">
+
+<Content />
+
+</div>
+
+</article>
+
+</Layout>
